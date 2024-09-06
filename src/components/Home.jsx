@@ -72,7 +72,7 @@ const Home = () => {
           hasSearched={hasSearched}
         />
       </Row>
-      <Row>
+      <Row className='music-player'>
         <MusicPlayer />
       </Row>
     </Container>

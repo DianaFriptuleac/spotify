@@ -27,7 +27,7 @@ const LikedSongs = () => {
               lg={4}
               xl={3}
               key={song.id || index}
-              md={3}
+              md={6}
               className="mb-4"
             >
               <Card>
@@ -81,7 +81,9 @@ const LikedSongs = () => {
           </>
         )}
       </Row>
+      <Row className='like-player'>
       <MusicPlayer />
+      </Row>
     </Container>
   );
 };

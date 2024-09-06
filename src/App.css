@@ -226,6 +226,11 @@ color:rgb(60, 211, 60)
 .play-btn p{
   color:rgb(60, 211, 60)
 }
-
+.music-player{
+  margin-top: 5em; 
+}
+.like-player{
+  margin-top: 7em; 
+}
 
 
