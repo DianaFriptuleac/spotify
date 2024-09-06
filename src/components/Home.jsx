@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import { setAlbums, setSearchResults } from '../redux/action';
@@ -12,6 +12,8 @@ const Home = () => {
   const popAlbums = useSelector(state => state.albums.pop);
   const hiphopAlbums = useSelector(state => state.albums.hiphop);
   const searchResults = useSelector(state => state.searchResults);
+  
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
 
   const musicSection = async (artistName) => {
     try {
@@ -22,6 +24,7 @@ const Home = () => {
         let { data } = await response.json();
         dispatch(setSearchResults(data));
         dispatch(setAlbums({ [artistName]: data.slice(0, 6) }));
+        setSearchQuery(artistName); // Update search query
       } else {
         throw new Error('Error in fetching songs');
       }
@@ -45,16 +48,18 @@ const Home = () => {
           popAlbums={popAlbums}
           hiphopAlbums={hiphopAlbums}
           searchResults={searchResults}
+          searchQuery={searchQuery} // Pass searchQuery
         />
       </Row>
-     <Row>
-        <MusicPlayer/>
-        </Row>
+      <Row>
+        <MusicPlayer />
+      </Row>
     </Container>
   );
 };
 
 export default Home;
+
 
 
 

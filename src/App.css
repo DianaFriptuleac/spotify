@@ -211,7 +211,21 @@ body {
 .btn-notFound{
   background-color:rgb(60, 211, 60)
 }
-
+.player-btn svg{
+color:rgb(60, 211, 60)
+}
+.like-btn svg {
+  color:rgb(60, 211, 60)
+}
+.nameSong{
+  color:rgb(60, 211, 60)
+}
+.play-btn svg{
+  color:rgb(60, 211, 60)
+}
+.play-btn p{
+  color:rgb(60, 211, 60)
+}
 
 
 

@@ -1,8 +1,8 @@
-
 import { Col, Row, Nav } from 'react-bootstrap';
 import SingleAlbum from './SingleAlbum';
+import SearchResults from './SearchResults'; 
 
-const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults }) => (
+const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults, searchQuery }) => (
   <Col md={9} className="offset-md-3 mainPage">
     <Row>
       <Col lg={11}>
@@ -17,12 +17,7 @@ const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults }) =
     </Row>
 
     {searchResults.length > 0 ? (
-      <Row className="py-3 text-light">
-        <Col md={10}>
-          <h2>Search Results</h2>
-          <Row>{searchResults.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
-        </Col>
-      </Row>
+      <SearchResults searchResults={searchResults} searchQuery={searchQuery} />
     ) : (
       <>
         <Row className="py-3 text-light">
@@ -51,4 +46,6 @@ const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults }) =
 );
 
 export default MainComponent;
+
+
 

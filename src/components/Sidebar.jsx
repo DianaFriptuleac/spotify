@@ -28,43 +28,29 @@ const Sidebar = () => {
       handleSearch();
     }
   };
+
   const location = useLocation(); 
-  //classe active per i link
   const addActiveOrNot = (path) => {
-    return location.pathname === '/' + path ? 'nav-link active' : 'nav-link'
-  }
+    return location.pathname === '/' + path ? 'nav-link active' : 'nav-link';
+  };
 
   return (
     <Col md={2}>
-      <Navbar
-        expand="md"
-        className="left-nav navbar navbar-expand-md fixed-left justify-content-between"
-        fixed="left"
-        id="sidebar"
-      >
+      <Navbar expand="md" className="left-nav navbar navbar-expand-md fixed-left justify-content-between" fixed="left" id="sidebar">
         <div className="d-flex flex-column">
-        <Link to ='/' className="text-decoration-none">
-          <Navbar.Brand>
-            <img
-              src="assets/logo/logo.png"
-              alt="Spotify Logo"
-              width="131"
-              height="40"
-            />
-          </Navbar.Brand>
+          <Link to='/' className="text-decoration-none">
+            <Navbar.Brand>
+              <img src="assets/logo/logo.png" alt="Spotify Logo" width="131" height="40" />
+            </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="navbar-nav" />
           <Navbar.Collapse id="navbar-nav">
             <Nav className="flex-column">
-            <Link to="/" className={addActiveOrNot('home')}>
-           
+              <Link to="/" className={addActiveOrNot('home')}>
                 <i className="bi bi-house-door-fill"></i>&nbsp; Home
-              
               </Link>
               <Link to="/liked-songs" className={addActiveOrNot('liked-songs')}>
-            
                 <i className="bi bi-book-fill"></i>&nbsp; Your Library
-            
               </Link>
               <InputGroup className="mt-3 search-input ms-1">
                 <Form.Control
@@ -80,9 +66,7 @@ const Sidebar = () => {
           </Navbar.Collapse>
         </div>
         <div className="mt-auto nav-btn">
-          <Button variant="primary" className="mb-2 btn signup-btn">
-            Sign Up
-          </Button>
+          <Button variant="primary" className="mb-2 btn signup-btn">Sign Up</Button>
           <Button variant="secondary" className="btn login-btn">Login</Button>
           <div>
             <a href="#">Cookie Policy</a> | <a href="#">Privacy</a>
@@ -94,3 +78,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+

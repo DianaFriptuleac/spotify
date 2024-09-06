@@ -6,8 +6,8 @@ import { setCurrentSong, togglePlay } from '../redux/action';
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
-  const currentSong = useSelector(state => state.currentSong); // Canzone corrente
-  const isPlaying = useSelector(state => state.isPlaying); // Stato di riproduzione
+  const currentSong = useSelector(state => state.currentSong);
+  const isPlaying = useSelector(state => state.isPlaying);
   const audioRef = useRef(null);
 
   const handlePlayPause = () => {
@@ -19,16 +19,15 @@ const MusicPlayer = () => {
   useEffect(() => {
     if (audioRef.current) {
       if (currentSong && currentSong.preview) {
-        audioRef.current.src = currentSong.preview; // Imposta la sorgente audio
+        audioRef.current.src = currentSong.preview;
       }
       if (isPlaying) {
-        audioRef.current.play(); // Avvia la riproduzione
+        audioRef.current.play();
       } else {
-        audioRef.current.pause(); // Metti in pausa
+        audioRef.current.pause();
       }
     }
-  }, [currentSong, isPlaying]); // Aggiungi currentSong e isPlaying alle dipendenze
-  
+  }, [currentSong, isPlaying]);
 
   return (
     <div className="fixed-bottom bg-dark text-light py-2">
@@ -38,31 +37,32 @@ const MusicPlayer = () => {
           <Row className="justify-content-center align-items-center">
             <Col xs={12} md={8} lg={6}>
               <div className="d-flex justify-content-between align-items-center">
-                <Button variant="link" onClick={() => dispatch(setCurrentSong(/* brano precedente */))}>
+                <Button className='player-btn' variant="link" onClick={() => dispatch(setCurrentSong(/* previous */))}>
                   <FaStepBackward />
                 </Button>
-                <Button variant="link" onClick={handlePlayPause}>
+                <Button className='player-btn' variant="link" onClick={handlePlayPause}>
                   {isPlaying ? <FaPause /> : <FaPlay />}
                 </Button>
-                <Button variant="link" onClick={() => dispatch(setCurrentSong(/* brano successivo */))}>
+                <Button className='player-btn' variant="link" onClick={() => dispatch(setCurrentSong(/* next*/))}>
                   <FaStepForward />
                 </Button>
               </div>
               <div className="text-center mt-2">
                 <p className="mb-0">{currentSong.title}</p>
-                <p className="mb-0 text-muted">{currentSong.artist?.name}</p>
+                <p className="mb-0">{currentSong.artist?.name}</p> {/* Show artist name */}
               </div>
             </Col>
           </Row>
         </>
       ) : (
-        <p className="text-center">Seleziona una canzone da riprodurre</p>
+        <p className="text-center">Select a song to play</p>
       )}
     </div>
   );
 };
 
 export default MusicPlayer;
+
 
 
 

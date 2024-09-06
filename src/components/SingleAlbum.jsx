@@ -13,26 +13,24 @@ const SingleAlbum = ({ song }) => {
   };
 
   const handlePlay = () => {
-    dispatch(setCurrentSong(song)); // Imposta il brano corrente per il player
+    dispatch(setCurrentSong(song)); // Set the current song for the player
   };
 
   const isLiked = likedSongs.some((likedSong) => likedSong.id === song.id);
 
   return (
     <Col xs={12} sm={6} md={4} lg={3} xl={3} className="text-center mb-4">
-      <Card className="border border-0">
+      <Card className="border border-0" onClick={handlePlay}>
         <Card.Img variant="top" src={song.album.cover_medium} alt="track" />
       </Card>
       <div className="cardBody">
-        <p className="mb-0">Track: "{song.title}"</p>
-        <p>Artist: {song.artist.name}</p>
-        <Button variant={isLiked ? 'primary' : 'secondary'} onClick={handleLike}>
+        <Button className='like-btn' variant={isLiked ? 'like-btn' : ''} onClick={handleLike}>
           {isLiked ? <FaHeart /> : <FaRegHeart />}
         </Button>
-        <Button variant="success" onClick={handlePlay}>Play</Button>
       </div>
     </Col>
   );
 };
 
 export default SingleAlbum;
+
