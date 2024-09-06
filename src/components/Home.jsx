@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Col, Card, Nav, Row } from "react-bootstrap";
 import Sidebar from "./Sidebar";
+import SingleAlbum from "./SingleAlbum";
 
 const Home = () => {
   const [rockAlbums, setRockAlbums] = useState([]);
@@ -8,25 +9,25 @@ const Home = () => {
   const [hiphopAlbums, setHiphopAlbums] = useState([]);
 
   // Funzione per album card
-  const myAlbumCard = (singleSong) => (
-    <Col key={singleSong.id} className="text-center mb-4">
-      <Card className="border border-0">
-        <Card.Img
-          variant="top"
-          src={singleSong.album.cover_medium}
-          alt="track"
-        />
-         </Card>
-       
-          <div className="cardBody">
-            <p className="mb-0">
-            Track: "{singleSong.title}"</p>
-           <p> Artist: {singleSong.artist.name}</p>
-          </div>
+ // const myAlbumCard = (singleSong) => (
+  //  <Col key={singleSong.id} className="text-center mb-4">
+  //    <Card className="border border-0">
+   //     <Card.Img
+   //       variant="top"
+   //       src={singleSong.album.cover_medium}
+    //      alt="track"
+    //    />
+     //    </Card>
+    //   
+      //    <div className="cardBody">
+     //       <p className="mb-0">
+      //      Track: "{singleSong.title}"</p>
+      //     <p> Artist: {singleSong.artist.name}</p>
+       //   </div>
        
      
-    </Col>
-  );
+   // </Col>
+ // );
 
   // Fetch
   const musicSection = async (artistName, setAlbumState) => {
@@ -75,21 +76,21 @@ const Home = () => {
           <Row className="py-3 text-light">
             <Col md={10}>
               <h2>Rock Classics</h2>
-              <Row>{rockAlbums.map((song) => myAlbumCard(song))}</Row>
+              <Row>{rockAlbums.map(song=> <SingleAlbum key={song.id} song={song}/>)}</Row>
             </Col>
           </Row>
 
           <Row className="py-3 text-light">
             <Col md={10}>
               <h2>Pop Culture</h2>
-              <Row>{popAlbums.map((song) => myAlbumCard(song))}</Row>
+              <Row>{popAlbums.map(song=> <SingleAlbum key={song.id} song={song}/>)}</Row>
             </Col>
           </Row>
 
           <Row className="py-3 text-light">
             <Col md={10}>
               <h2>#HipHop</h2>
-              <Row>{hiphopAlbums.map((song) => myAlbumCard(song))}</Row>
+              <Row>{hiphopAlbums.map(song=> <SingleAlbum key={song.id} song={song}/>)}</Row>
             </Col>
           </Row>
         </Col>
