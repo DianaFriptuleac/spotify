@@ -9,10 +9,10 @@ export const setAlbums = (albums) => ({
   payload: albums,
 });
 
-export const likeSong = (songId) => ({
-  type: LIKE_SONG,
-  payload: songId,
-});
+export const likeSong = (song) => ({
+    type: LIKE_SONG,
+    payload: song,
+  });
 
 export const setSearchResults = (results) => ({
   type: SET_SEARCH_RESULTS,

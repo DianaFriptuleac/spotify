@@ -4,6 +4,7 @@ import { Container, Row } from 'react-bootstrap';
 import { setAlbums, setSearchResults } from '../redux/action';
 import Sidebar from './Sidebar';
 import MainComponent from './MainComponent';
+import MusicPlayer from './MusicPlayer';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ const Home = () => {
           searchResults={searchResults}
         />
       </Row>
+     <Row>
+        <MusicPlayer/>
+        </Row>
     </Container>
   );
 };

@@ -1,20 +1,25 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { likeSong } from '../redux/action';
+import { likeSong, setCurrentSong } from '../redux/action';
 import { Col, Card, Button } from 'react-bootstrap';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const SingleAlbum = ({ song }) => {
   const dispatch = useDispatch();
   const likedSongs = useSelector(state => state.likedSongs);
 
   const handleLike = () => {
-    dispatch(likeSong(song.id));
+    dispatch(likeSong(song));
   };
 
-  const isLiked = likedSongs.includes(song.id);
+  const handlePlay = () => {
+    dispatch(setCurrentSong(song)); // Imposta il brano corrente per il player
+  };
+
+  const isLiked = likedSongs.some((likedSong) => likedSong.id === song.id);
 
   return (
-    <Col xs={12} sm={6} md={4} lg={3} xl={3}  className="text-center mb-4">
+    <Col xs={12} sm={6} md={4} lg={3} xl={3} className="text-center mb-4">
       <Card className="border border-0">
         <Card.Img variant="top" src={song.album.cover_medium} alt="track" />
       </Card>
@@ -22,8 +27,9 @@ const SingleAlbum = ({ song }) => {
         <p className="mb-0">Track: "{song.title}"</p>
         <p>Artist: {song.artist.name}</p>
         <Button variant={isLiked ? 'primary' : 'secondary'} onClick={handleLike}>
-          {isLiked ? 'Liked' : 'Like'}
+          {isLiked ? <FaHeart /> : <FaRegHeart />}
         </Button>
+        <Button variant="success" onClick={handlePlay}>Play</Button>
       </div>
     </Col>
   );

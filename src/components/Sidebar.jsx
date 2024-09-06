@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Col, Navbar, Nav, InputGroup, Form } from 'react-bootstrap';
 import { setSearchResults } from '../redux/action';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
   const [query, setQuery] = useState('');
@@ -27,6 +28,11 @@ const Sidebar = () => {
       handleSearch();
     }
   };
+  const location = useLocation(); 
+  //classe active per i link
+  const addActiveOrNot = (path) => {
+    return location.pathname === '/' + path ? 'nav-link active' : 'nav-link'
+  }
 
   return (
     <Col md={2}>
@@ -37,7 +43,8 @@ const Sidebar = () => {
         id="sidebar"
       >
         <div className="d-flex flex-column">
-          <Navbar.Brand href="/">
+        <Link to ='/' className="text-decoration-none">
+          <Navbar.Brand>
             <img
               src="assets/logo/logo.png"
               alt="Spotify Logo"
@@ -45,15 +52,20 @@ const Sidebar = () => {
               height="40"
             />
           </Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls="navbar-nav" />
           <Navbar.Collapse id="navbar-nav">
             <Nav className="flex-column">
-              <Nav.Link href="#">
+            <Link to="/" className={addActiveOrNot('home')}>
+           
                 <i className="bi bi-house-door-fill"></i>&nbsp; Home
-              </Nav.Link>
-              <Nav.Link href="#">
+              
+              </Link>
+              <Link to="/liked-songs" className={addActiveOrNot('liked-songs')}>
+            
                 <i className="bi bi-book-fill"></i>&nbsp; Your Library
-              </Nav.Link>
+            
+              </Link>
               <InputGroup className="mt-3 search-input ms-1">
                 <Form.Control
                   placeholder="Search"
