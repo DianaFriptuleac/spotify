@@ -10,6 +10,7 @@ const Home = () => {
   const rockAlbums = useSelector(state => state.albums.rock);
   const popAlbums = useSelector(state => state.albums.pop);
   const hiphopAlbums = useSelector(state => state.albums.hiphop);
+  const searchResults = useSelector(state => state.searchResults);
 
   const musicSection = async (artistName) => {
     try {
@@ -19,7 +20,7 @@ const Home = () => {
       if (response.ok) {
         let { data } = await response.json();
         dispatch(setSearchResults(data));
-        dispatch(setAlbums({ [artistName]: data.slice(0, 4) }));
+        dispatch(setAlbums({ [artistName]: data.slice(0, 6) }));
       } else {
         throw new Error('Error in fetching songs');
       }
@@ -42,6 +43,7 @@ const Home = () => {
           rockAlbums={rockAlbums}
           popAlbums={popAlbums}
           hiphopAlbums={hiphopAlbums}
+          searchResults={searchResults}
         />
       </Row>
     </Container>
@@ -49,5 +51,6 @@ const Home = () => {
 };
 
 export default Home;
+
 
 

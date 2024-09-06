@@ -1,7 +1,8 @@
-import { Col, Row, Nav } from "react-bootstrap";
-import SingleAlbum from "./SingleAlbum";
 
-const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums }) => (
+import { Col, Row, Nav } from 'react-bootstrap';
+import SingleAlbum from './SingleAlbum';
+
+const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults }) => (
   <Col md={9} className="offset-md-3 mainPage">
     <Row>
       <Col lg={11}>
@@ -15,27 +16,39 @@ const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums }) => (
       </Col>
     </Row>
 
-    <Row className="py-3 text-light">
-      <Col md={10}>
-        <h2>Rock Classics</h2>
-        <Row>{rockAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
-      </Col>
-    </Row>
+    {searchResults.length > 0 ? (
+      <Row className="py-3 text-light">
+        <Col md={10}>
+          <h2>Search Results</h2>
+          <Row>{searchResults.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+        </Col>
+      </Row>
+    ) : (
+      <>
+        <Row className="py-3 text-light">
+          <Col md={10}>
+            <h2>Rock Classics</h2>
+            <Row>{rockAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+          </Col>
+        </Row>
 
-    <Row className="py-3 text-light">
-      <Col md={10}>
-        <h2>Pop Culture</h2>
-        <Row>{popAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
-      </Col>
-    </Row>
+        <Row className="py-3 text-light">
+          <Col md={10}>
+            <h2>Pop Culture</h2>
+            <Row>{popAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+          </Col>
+        </Row>
 
-    <Row className="py-3 text-light">
-      <Col md={10}>
-        <h2>#HipHop</h2>
-        <Row>{hiphopAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
-      </Col>
-    </Row>
+        <Row className="py-3 text-light">
+          <Col md={10}>
+            <h2>#HipHop</h2>
+            <Row>{hiphopAlbums.map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+          </Col>
+        </Row>
+      </>
+    )}
   </Col>
 );
 
 export default MainComponent;
+

@@ -14,7 +14,7 @@ const SingleAlbum = ({ song }) => {
   const isLiked = likedSongs.includes(song.id);
 
   return (
-    <Col className="text-center mb-4">
+    <Col xs={12} sm={6} md={4} lg={3} xl={3}  className="text-center mb-4">
       <Card className="border border-0">
         <Card.Img variant="top" src={song.album.cover_medium} alt="track" />
       </Card>
