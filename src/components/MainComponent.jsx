@@ -1,6 +1,7 @@
-import { Col, Row, Nav } from 'react-bootstrap';
-import SingleAlbum from './SingleAlbum';
-import SearchResults from './SearchResults';
+import React from "react";
+import { Col, Row, Nav } from "react-bootstrap";
+import SingleAlbum from "./SingleAlbum";
+import SearchResults from "./SearchResults";
 
 const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults, searchQuery, hasSearched }) => (
   <Col md={9} className="offset-md-3 mainPage">
@@ -23,21 +24,21 @@ const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults, sea
         <Row className="py-3 text-light">
           <Col md={10}>
             <h2>Rock Classics</h2>
-            <Row>{rockAlbums.slice(0, 5).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+            <Row>{rockAlbums.slice(0, 6).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
           </Col>
         </Row>
 
         <Row className="py-3 text-light">
           <Col md={10}>
             <h2>Pop Culture</h2>
-            <Row>{popAlbums.slice(0, 5).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+            <Row>{popAlbums.slice(0, 6).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
           </Col>
         </Row>
 
         <Row className="py-3 text-light">
           <Col md={10}>
             <h2>#HipHop</h2>
-            <Row>{hiphopAlbums.slice(0, 5).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
+            <Row>{hiphopAlbums.slice(0, 6).map(song => <SingleAlbum key={song.id} song={song} />)}</Row>
           </Col>
         </Row>
       </>
@@ -46,6 +47,7 @@ const MainComponent = ({ rockAlbums, popAlbums, hiphopAlbums, searchResults, sea
 );
 
 export default MainComponent;
+
 
 
 

@@ -19,7 +19,7 @@ const SingleAlbum = ({ song }) => {
   const isLiked = likedSongs.some((likedSong) => likedSong.id === song.id);
 
   return (
-    <Col xs={12} sm={6} md={3} lg={2} className="text-center mb-4">
+    <Col xs={12} sm={6} md={4} lg={3} xl={2} className="text-center mb-4">
       <Card className="border border-0" onClick={handlePlay}>
         <Card.Img variant="top" src={song.album.cover_medium} alt="track" />
       </Card>

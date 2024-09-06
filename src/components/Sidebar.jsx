@@ -9,6 +9,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSearch(query);
+      setQuery("");
     }
   };
 
@@ -28,7 +29,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
           >
             <Navbar.Brand>
               <img
-              className="mt-2"
+                className="mt-2"
                 src="assets/logo/spotify.png"
                 alt="Spotify Logo"
                 width="131"
@@ -41,6 +42,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
             <Nav className="flex-column">
               <Link
                 to="/"
+                onClick={handleHomeClick}
                 className={`nav-link ${
                   location.pathname === "/" ? "active" : ""
                 }`}
@@ -65,7 +67,10 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
                 />
                 <Button
                   variant="outline-secondary"
-                  onClick={() => handleSearch(query)}
+                  onClick={() => {
+                    handleSearch(query);
+                    setQuery(""); 
+                  }}
                 >
                   GO
                 </Button>
