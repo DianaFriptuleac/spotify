@@ -47,7 +47,7 @@ body {
 }
 
 /*SIDEBAR SECTION*/
-.navbar.fixed-left {
+.left-nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -60,24 +60,24 @@ body {
   z-index: 1200;
 }
 
-.navbar.fixed-left .navbar-collapse .navbar-nav a {
+.fixed-left .navbar-nav a {
   color: rgb(145, 145, 145) !important;
   transition: 0.3s;
 }
 
-.navbar.fixed-left .navbar-collapse .navbar-nav a:hover {
+.fixed-left .navbar-collapse .navbar-nav a:hover {
   color: white !important;
 }
 
-.navbar.fixed-left .navbar-brand {
+.fixed-left .navbar-brand {
   padding-top: 20px;
   padding-bottom: 30px;
   padding-left: 10px;
 }
 
-ul {
-  list-style-type: none;
-  padding-left: 3px;
+.search-input{
+  width: 90%;
+
 }
 
 .nav-btn {
@@ -103,7 +103,7 @@ ul {
   margin-bottom: 20px;
 }
 
-.signup-btn:hover {
+.signup-btn:hover{
   color: white;
   background-color: rgb(60, 211, 60);
   border: 1px solid rgb(60, 211, 60);
@@ -128,6 +128,13 @@ ul {
     display: none;
   }
 }
+@media (min-width: 768px) {
+  .d-md-flex {
+      display: flex !important;}}
+
+      .mainLinks a:hover {
+        color:rgb(60, 211, 60)
+      }
 
 /* BOTTOM PLAYER SECTION*/
 
@@ -198,18 +205,10 @@ ul {
   font-weight: 700;
 }
 
-#rock,
-#pop,
-#hiphop {
-  color: white;
-  font-weight: 700;
-  padding-top: 50px;
+.cardBody{
+  background-color: transparent;
 }
 
-#hipHopSection {
-  margin-bottom: 7rem;
-}
 
-.mainPage img {
-  width: 200px;
-}
+
+

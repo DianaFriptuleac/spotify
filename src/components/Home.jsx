@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Col,
-  Card,
-  Navbar,
-  Nav,
-  Row,
-  InputGroup,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Container, Col, Card, Nav, Row } from "react-bootstrap";
+import Sidebar from "./Sidebar";
 
 const Home = () => {
   const [rockAlbums, setRockAlbums] = useState([]);
@@ -19,19 +10,21 @@ const Home = () => {
   // Funzione per album card
   const myAlbumCard = (singleSong) => (
     <Col key={singleSong.id} className="text-center mb-4">
-      <Card>
+      <Card className="border border-0">
         <Card.Img
           variant="top"
           src={singleSong.album.cover_medium}
           alt="track"
         />
-        <Card.Body>
-          <Card.Text>
-            Track: "{singleSong.title}"<br />
-            Artist: {singleSong.artist.name}
-          </Card.Text>
-        </Card.Body>
-      </Card>
+         </Card>
+       
+          <div className="cardBody">
+            <p className="mb-0">
+            Track: "{singleSong.title}"</p>
+           <p> Artist: {singleSong.artist.name}</p>
+          </div>
+       
+     
     </Col>
   );
 
@@ -63,53 +56,13 @@ const Home = () => {
     <Container fluid>
       <Row>
         {/* Sidebar */}
-        <Col md={2}>
-          <Navbar
-            bg="light"
-            expand="md"
-            className="d-flex flex-column align-items-start"
-            fixed="left"
-          >
-            <Navbar.Brand href="/">
-              <img
-                src="assets/logo/logo.png"
-                alt="Spotify Logo"
-                width="131"
-                height="40"
-              />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="navbar-nav" />
-            <Navbar.Collapse id="navbar-nav">
-              <Nav className="flex-column">
-                <Nav.Link href="#">
-                  <i className="bi bi-house-door-fill"></i>&nbsp; Home
-                </Nav.Link>
-                <Nav.Link href="#">
-                  <i className="bi bi-book-fill"></i>&nbsp; Your Library
-                </Nav.Link>
-                <InputGroup className="mt-3">
-                  <Form.Control placeholder="Search" aria-label="Search" />
-                  <Button variant="outline-secondary">GO</Button>
-                </InputGroup>
-              </Nav>
-            </Navbar.Collapse>
-            <div className="mt-auto">
-              <Button variant="primary" className="mb-2">
-                Sign Up
-              </Button>
-              <Button variant="secondary">Login</Button>
-              <div>
-                <a href="#">Cookie Policy</a> | <a href="#"> Privacy</a>
-              </div>
-            </div>
-          </Navbar>
-        </Col>
+        <Sidebar />
 
         {/* Main Section */}
         <Col md={9} className="offset-md-3 mainPage">
           <Row>
-            <Col lg={11} className="d-none d-md-flex">
-              <Nav className="mainLinks">
+            <Col lg={11}>
+              <Nav className="mainLinks d-none d-md-flex">
                 <Nav.Link href="#">TRENDING</Nav.Link>
                 <Nav.Link href="#">PODCAST</Nav.Link>
                 <Nav.Link href="#">MOODS AND GENRES</Nav.Link>
@@ -119,21 +72,21 @@ const Home = () => {
             </Col>
           </Row>
 
-          <Row className="py-3">
+          <Row className="py-3 text-light">
             <Col md={10}>
               <h2>Rock Classics</h2>
               <Row>{rockAlbums.map((song) => myAlbumCard(song))}</Row>
             </Col>
           </Row>
 
-          <Row className="py-3">
+          <Row className="py-3 text-light">
             <Col md={10}>
               <h2>Pop Culture</h2>
               <Row>{popAlbums.map((song) => myAlbumCard(song))}</Row>
             </Col>
           </Row>
 
-          <Row className="py-3">
+          <Row className="py-3 text-light">
             <Col md={10}>
               <h2>#HipHop</h2>
               <Row>{hiphopAlbums.map((song) => myAlbumCard(song))}</Row>
