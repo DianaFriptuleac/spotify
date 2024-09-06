@@ -12,8 +12,8 @@ const Home = () => {
   const popAlbums = useSelector(state => state.albums.pop);
   const hiphopAlbums = useSelector(state => state.albums.hiphop);
   const searchResults = useSelector(state => state.searchResults);
-  
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [hasSearched, setHasSearched] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const musicSection = async (artistName) => {
     try {
@@ -24,7 +24,6 @@ const Home = () => {
         let { data } = await response.json();
         dispatch(setSearchResults(data));
         dispatch(setAlbums({ [artistName]: data.slice(0, 6) }));
-        setSearchQuery(artistName); // Update search query
       } else {
         throw new Error('Error in fetching songs');
       }
@@ -39,16 +38,38 @@ const Home = () => {
     musicSection('hiphop');
   }, [dispatch]);
 
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    try {
+      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`);
+      if (response.ok) {
+        let { data } = await response.json();
+        dispatch(setSearchResults(data));
+        setHasSearched(true);
+      } else {
+        throw new Error('Error in fetching search results');
+      }
+    } catch (err) {
+      console.error('Fetch error:', err);
+    }
+  };
+
+  const handleHomeClick = () => {
+    setHasSearched(false);
+    setSearchQuery('');
+  };
+
   return (
     <Container fluid>
       <Row>
-        <Sidebar />
+        <Sidebar handleSearch={handleSearch} handleHomeClick={handleHomeClick} />
         <MainComponent
           rockAlbums={rockAlbums}
           popAlbums={popAlbums}
           hiphopAlbums={hiphopAlbums}
           searchResults={searchResults}
-          searchQuery={searchQuery} // Pass searchQuery
+          searchQuery={searchQuery}
+          hasSearched={hasSearched}
         />
       </Row>
       <Row>
@@ -59,7 +80,4 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
 

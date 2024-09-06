@@ -2,7 +2,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
-  const navigate = useNavigate();  //un hook che ci riporta alla pagina
+  const navigate = useNavigate(); 
   return (
     <Container>
       <Row className="justify-content-center my-5 text-light" >

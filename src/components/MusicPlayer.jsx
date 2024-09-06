@@ -49,7 +49,7 @@ const MusicPlayer = () => {
               </div>
               <div className="text-center mt-2">
                 <p className="mb-0">{currentSong.title}</p>
-                <p className="mb-0">{currentSong.artist?.name}</p> {/* Show artist name */}
+                <p className="mb-0">{currentSong.artist?.name}</p> {/*artist name */}
               </div>
             </Col>
           </Row>

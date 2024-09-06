@@ -1,55 +1,58 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Button, Col, Navbar, Nav, InputGroup, Form } from 'react-bootstrap';
-import { setSearchResults } from '../redux/action';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import { Button, Col, Navbar, Nav, InputGroup, Form } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 
-const Sidebar = () => {
-  const [query, setQuery] = useState('');
-  const dispatch = useDispatch();
-
-  const handleSearch = async () => {
-    try {
-      let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`);
-      if (response.ok) {
-        let { data } = await response.json();
-        dispatch(setSearchResults(data));
-        setQuery(''); // Clear the input field after search
-      } else {
-        throw new Error('Error in fetching search results');
-      }
-    } catch (err) {
-      console.error('Fetch error:', err);
-    }
-  };
+const Sidebar = ({ handleSearch, handleHomeClick }) => {
+  const [query, setQuery] = useState("");
+  const location = useLocation();
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
+    if (event.key === "Enter") {
+      handleSearch(query);
     }
-  };
-
-  const location = useLocation(); 
-  const addActiveOrNot = (path) => {
-    return location.pathname === '/' + path ? 'nav-link active' : 'nav-link';
   };
 
   return (
     <Col md={2}>
-      <Navbar expand="md" className="left-nav navbar navbar-expand-md fixed-left justify-content-between" fixed="left" id="sidebar">
+      <Navbar
+        expand="md"
+        className="left-nav navbar navbar-expand-md fixed-left justify-content-between"
+        fixed="left"
+        id="sidebar"
+      >
         <div className="d-flex flex-column">
-          <Link to='/' className="text-decoration-none">
+          <Link
+            to="/"
+            className="text-decoration-none"
+            onClick={handleHomeClick}
+          >
             <Navbar.Brand>
-              <img src="assets/logo/logo.png" alt="Spotify Logo" width="131" height="40" />
+              <img
+              className="mt-2"
+                src="assets/logo/spotify.png"
+                alt="Spotify Logo"
+                width="131"
+                height="40"
+              />
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="navbar-nav" />
           <Navbar.Collapse id="navbar-nav">
             <Nav className="flex-column">
-              <Link to="/" className={addActiveOrNot('home')}>
+              <Link
+                to="/"
+                className={`nav-link ${
+                  location.pathname === "/" ? "active" : ""
+                }`}
+              >
                 <i className="bi bi-house-door-fill"></i>&nbsp; Home
               </Link>
-              <Link to="/liked-songs" className={addActiveOrNot('liked-songs')}>
+              <Link
+                to="/liked-songs"
+                className={`nav-link ${
+                  location.pathname === "/liked-songs" ? "active" : ""
+                }`}
+              >
                 <i className="bi bi-book-fill"></i>&nbsp; Your Library
               </Link>
               <InputGroup className="mt-3 search-input ms-1">
@@ -60,16 +63,31 @@ const Sidebar = () => {
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyUp={handleKeyPress}
                 />
-                <Button variant="outline-secondary" onClick={handleSearch}>GO</Button>
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => handleSearch(query)}
+                >
+                  GO
+                </Button>
               </InputGroup>
             </Nav>
           </Navbar.Collapse>
         </div>
         <div className="mt-auto nav-btn">
-          <Button variant="primary" className="mb-2 btn signup-btn">Sign Up</Button>
-          <Button variant="secondary" className="btn login-btn">Login</Button>
+          <Button variant="primary" className="mb-2 btn signup-btn">
+            Sign Up
+          </Button>
+          <Button variant="secondary" className="btn login-btn">
+            Login
+          </Button>
           <div>
-            <a href="#">Cookie Policy</a> | <a href="#">Privacy</a>
+            <a href="https://support.spotify.com/it/category/safety-privacy/">
+              Cookie Policy
+            </a>{" "}
+            |{" "}
+            <a href="https://support.spotify.com/it/category/safety-privacy/">
+              Privacy
+            </a>
           </div>
         </div>
       </Navbar>
@@ -78,4 +96,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
