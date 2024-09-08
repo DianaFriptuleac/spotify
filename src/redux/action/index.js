@@ -3,6 +3,7 @@ export const LIKE_SONG = 'LIKE_SONG';
 export const SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS';
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG';
 export const TOGGLE_PLAY = 'TOGGLE_PLAY';
+export const REMOVE_FROM_LIKED_SONGS = 'REMOVE_FROM_LIKED_SONGS'
 
 export const setAlbums = (albums) => ({
   type: SET_ALBUMS,
@@ -25,4 +26,9 @@ export const setCurrentSong = (song) => ({
   
   export const togglePlay = () => ({
     type: TOGGLE_PLAY,
+  });
+
+  export const removeFromLikedSongs = (songId) => ({
+    type: REMOVE_FROM_LIKED_SONGS,
+    payload: songId,
   });

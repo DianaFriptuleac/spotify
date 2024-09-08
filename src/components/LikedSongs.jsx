@@ -1,18 +1,21 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row, Card, Button, Container } from "react-bootstrap";
-import { setCurrentSong } from "../redux/action";
+import { setCurrentSong,removeFromLikedSongs } from "../redux/action";
 import MusicPlayer from "./MusicPlayer";
 import { useNavigate } from "react-router-dom";
-import { FaCirclePlay } from "react-icons/fa6";
+import { FaCirclePlay, FaHeartCircleXmark} from "react-icons/fa6";
 
 const LikedSongs = () => {
   const navigate = useNavigate();
-  const likedSongs = useSelector((state) => state.likedSongs); // Ottieni la lista delle canzoni preferite
-  const dispatch = useDispatch();
+  const likedSongs = useSelector((state) => state.likedSongs); // lista delle canzoni preferite
+  const dispatch = useDispatch(); 
 
   const handlePlay = (song) => {
     dispatch(setCurrentSong(song)); // Imposta la canzone corrente nel player
+  };
+
+  const handleRemoveFromLiked = (song) => {
+    dispatch(removeFromLikedSongs(song.id)); // Rimuovi la canzone dalla lista dei preferiti
   };
 
   return (
@@ -24,13 +27,12 @@ const LikedSongs = () => {
             <Col
               sm={12}
               md={6}
-              lg={4}
-              xl={3}
-              key={song.id || index}
-              md={6}
+              lg={3}
+              xl={2}
+              key={song.id || index}  //key id oppure l'inice se nn ha l'id
               className="mb-4"
             >
-              <Card>
+              <Card className="card">
                 <Card.Img
                   variant="top"
                   src={
@@ -62,6 +64,13 @@ const LikedSongs = () => {
                   }}
                 >
                  <p className="m-0"> Home</p>
+                </Button>
+                <Button
+                  className="remove-btn border border-1 d-flex align-items-center"
+                  variant="seccondary"
+                  onClick={() => handleRemoveFromLiked(song)}
+                >
+                  <FaHeartCircleXmark /> {/* Icona per rimuovere dai preferiti */}
                 </Button>
               </div>
             </Col>

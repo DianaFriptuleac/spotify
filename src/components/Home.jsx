@@ -22,38 +22,40 @@ const Home = () => {
       );
       if (response.ok) {
         let { data } = await response.json();
-        dispatch(setSearchResults(data));
-        dispatch(setAlbums({ [artistName]: data.slice(0, 6) }));
+        dispatch(setSearchResults(data));  //popolo i risultati della ricerca son setSearchResults
+        dispatch(setAlbums({ [artistName]: data.slice(0, 6) })); //salvo i dati nello stato di Redux setAlbum
       } else {
-        throw new Error('Error in fetching songs');
+        throw new Error('Errore nel recupero dati');
       }
     } catch (err) {
-      console.error('Fetch error:', err);
+      console.error('errore', err);
     }
   };
-
+//invoco musicSection 
   useEffect(() => {
     musicSection('rock');
     musicSection('pop');
     musicSection('hiphop');
   }, [dispatch]);
 
+  //ricerca dinamica
   const handleSearch = async (query) => {
     setSearchQuery(query);
     try {
       let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`);
       if (response.ok) {
         let { data } = await response.json();
-        dispatch(setSearchResults(data));
-        setHasSearched(true);
+        dispatch(setSearchResults(data));  
+        setHasSearched(true);  //true se mostra risultati di ricerca
       } else {
-        throw new Error('Error in fetching search results');
+        throw new Error('Errore nel recuper dati');
       }
     } catch (err) {
-      console.error('Fetch error:', err);
+      console.error('errore', err);
     }
   };
 
+  //Ripristino i album di default e resetto lo stato della ricerca
   const handleHomeClick = () => {
     setHasSearched(false);
     setSearchQuery('');

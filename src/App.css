@@ -232,5 +232,21 @@ color:rgb(60, 211, 60)
 .like-player{
   margin-top: 7em; 
 }
+.remove-btn svg{
+  color: rgb(238, 74, 74);
+}
+.card {
+  position: relative;
 
+  border-radius: 0px;
+  box-shadow: 5px 5px 30px rgba(122, 121, 121, 0.2); /* Ombra base */
+  transition: all 0.3s ease; /* Transizione fluida per hover */
+  opacity: 0.9; /* Opacità base */
+}
 
+/* Effetto al passaggio del mouse (hover) */
+.card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Ombra più intensa */
+  transform: translateY(-5px); /* Solleva la card */
+  opacity: 1; /* Aumenta l'opacità al passaggio del mouse */
+}
