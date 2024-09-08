@@ -12,6 +12,14 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+
+
+  //funzione per togliere l'errore del browser
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    })
+  }
 });
 
 export const persistor = persistStore(store);
