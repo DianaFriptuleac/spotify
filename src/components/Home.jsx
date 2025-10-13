@@ -23,7 +23,7 @@ const Home = () => {
    /*    let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/deezer/search?q=${artistName}`
       ); */  // develop
-     let response = await fetch(`/api/deezer/search?q=${artistName}`);  //vercel
+     let response = await fetch(`/api/deezer/?q=${artistName}`);  //vercel
       if (response.ok) {
         let { data } = await response.json();
         dispatch(setSearchResults(data));  //popolo i risultati della ricerca son setSearchResults
@@ -48,7 +48,7 @@ const Home = () => {
     setSearchQuery(query);
     try {
      /*  let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`); */ // develop
-     let response = await fetch(`/api/deezer/search?q=${query}`);  //vercel
+     let response = await fetch(`/api/deezer/?q=${query}`);  //vercel
       if (response.ok) {
         let { data } = await response.json();
         dispatch(setSearchResults(data));  
