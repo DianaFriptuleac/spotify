@@ -8,7 +8,7 @@ import {
 } from "../action";
 
 const initialState = {
-  albums: { rock: [], pop: [], hiphop: [] },
+  albums: { rock: [], pop: [], hiphop: [], latin: [] },
   likedSongs: [],
   searchResults: [],
   songs: [], // Lista di canzoni

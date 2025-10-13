@@ -238,7 +238,7 @@ color:rgb(60, 211, 60)
 .card {
   position: relative;
 
-  border-radius: 0px;
+  border-radius: 6px;
   box-shadow: 5px 5px 30px rgba(122, 121, 121, 0.2); /* Ombra base */
   transition: all 0.3s ease; /* Transizione fluida per hover */
   opacity: 0.9; /* Opacità base */

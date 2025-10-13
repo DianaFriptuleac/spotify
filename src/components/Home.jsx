@@ -11,16 +11,19 @@ const Home = () => {
   const rockAlbums = useSelector(state => state.albums.rock);
   const popAlbums = useSelector(state => state.albums.pop);
   const hiphopAlbums = useSelector(state => state.albums.hiphop);
+  const latinAlbums = useSelector(state => state.albums.latin)
   const searchResults = useSelector(state => state.searchResults);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+
+
   const musicSection = async (artistName) => {
     try {
-     /* let response = await fetch(
+   /*    let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/deezer/search?q=${artistName}`
-      );*/
-      let response = await fetch(`/api/deezer?q=${artistName}`);
+      ); */  // develop
+     let response = await fetch(`/api/deezer/search?q=${artistName}`);  //vercel
       if (response.ok) {
         let { data } = await response.json();
         dispatch(setSearchResults(data));  //popolo i risultati della ricerca son setSearchResults
@@ -37,14 +40,15 @@ const Home = () => {
     musicSection('rock');
     musicSection('pop');
     musicSection('hiphop');
+    musicSection('latin');
   }, [dispatch]);
 
   //ricerca dinamica
   const handleSearch = async (query) => {
     setSearchQuery(query);
     try {
-     /* let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`);*/
-     let response = await fetch(`/api/deezer?q=${query}`);
+     /*  let response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${query}`); */ // develop
+     let response = await fetch(`/api/deezer/search?q=${query}`);  //vercel
       if (response.ok) {
         let { data } = await response.json();
         dispatch(setSearchResults(data));  
@@ -71,6 +75,7 @@ const Home = () => {
           rockAlbums={rockAlbums}
           popAlbums={popAlbums}
           hiphopAlbums={hiphopAlbums}
+          latinAlbums={latinAlbums}
           searchResults={searchResults}
           searchQuery={searchQuery}
           hasSearched={hasSearched}
