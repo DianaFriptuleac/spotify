@@ -10,14 +10,13 @@ import { fetchHomeSections, fetchSearchResults } from "../redux/thunk/thunks";
 const Home = () => {
   const dispatch = useDispatch();
   const rockAlbums = useSelector((state) => state.albums.rock);
-  const popAlbums = useSelector((state) => state.albums.pop);
   const hiphopAlbums = useSelector((state) => state.albums.hiphop);
   const latinAlbums = useSelector((state) => state.albums.latin);
   const searchResults = useSelector((state) => state.searchResults);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-/*   //API
+  /*   //API
   // *process.env.NODE_ENV* ->  impostato automaticamente a "development" con npm start/ a "production" quando si fa il build per Vercel o un altro host
   const API_BASE_URL =
     process.env.NODE_ENV === "development"
@@ -30,10 +29,10 @@ const Home = () => {
       /*      let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/deezer/search?q=${artistName}`
       );   */
-      //vercel
-      // let response = await fetch(`/api/deezer/search?q=${artistName}`);
+  //vercel
+  // let response = await fetch(`/api/deezer/search?q=${artistName}`);
 
-   /*   let response = await fetch(`${API_BASE_URL}/search?q=${artistName}`);
+  /*   let response = await fetch(`${API_BASE_URL}/search?q=${artistName}`);
 
       if (response.ok) {
         let { data } = await response.json();
@@ -76,25 +75,35 @@ const Home = () => {
     }
   }; */
 
-
   useEffect(() => {
-    dispatch(fetchHomeSections())
+    dispatch(fetchHomeSections());
   }, [dispatch]);
 
-  const handleSearch= async(query) => {
+  const handleSearch = async (query) => {
     setSearchQuery(query);
-    try{
+    try {
       await dispatch(fetchSearchResults(query));
       setHasSearched(true);
-    } catch(error) {
-      console.log("Error", error)
+    } catch (error) {
+      console.log("Error", error);
     }
-  }
+  };
   //Ripristino i album di default e resetto lo stato della ricerca
   const handleHomeClick = () => {
     setHasSearched(false);
     setSearchQuery("");
     dispatch(fetchHomeSections()); //ricarica le sezioni
+  };
+
+  // music della nav
+  const handleNavClick = async (category) => {
+    try {
+      await dispatch(fetchSearchResults(category));
+      setSearchQuery(category);
+      setHasSearched(true);
+    } catch (error) {
+      console.log("Error music category", error);
+    }
   };
 
   return (
@@ -106,12 +115,12 @@ const Home = () => {
         />
         <MainComponent
           rockAlbums={rockAlbums}
-          popAlbums={popAlbums}
           hiphopAlbums={hiphopAlbums}
           latinAlbums={latinAlbums}
           searchResults={searchResults}
           searchQuery={searchQuery}
           hasSearched={hasSearched}
+          onNavClick={handleNavClick}
         />
       </Row>
       <Row className="music-player">
