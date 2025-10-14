@@ -6,8 +6,8 @@ export const API_SEARCH_URL = isDev
   : "/api/deezer"; 
 
   //Fetch base
-export async function searchDeezer(query) {
-  const res = await fetch(`${API_SEARCH_URL}?q=${encodeURIComponent(query)}`);
+export async function searchDeezer(query, {limit = 100, index = 0} = {}) {
+  const res = await fetch(`${API_SEARCH_URL}?q=${encodeURIComponent(query)}&limit=${limit}&index=${index}`);
   if (!res.ok) throw new Error("Errore nel recupero dati");
   const { data } = await res.json();
   return data;
