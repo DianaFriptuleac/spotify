@@ -6,7 +6,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const SingleAlbum = ({ song }) => {
   const dispatch = useDispatch();
-  const likedSongs = useSelector(state => state.likedSongs);
+  const likedSongs = useSelector(state => state.music.likedSongs ?? []);
 
   const handleLike = () => {
     dispatch(likeSong(song));

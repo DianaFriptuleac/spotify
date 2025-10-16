@@ -9,10 +9,10 @@ import { fetchHomeSections, fetchSearchResults } from "../redux/thunk/thunks";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const rockAlbums = useSelector((state) => state.albums.rock);
-  const hiphopAlbums = useSelector((state) => state.albums.hiphop);
-  const latinAlbums = useSelector((state) => state.albums.latin);
-  const searchResults = useSelector((state) => state.searchResults);
+  const rockAlbums = useSelector((state) => state.music.albums?.rock ?? []);
+  const hiphopAlbums = useSelector((state) => state.music.albums?.hiphop ?? []);
+  const latinAlbums = useSelector((state) => state.music.albums?.latin ?? []);
+  const searchResults = useSelector((state) => state.music.searchResults ?? []);
   const [hasSearched, setHasSearched] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
