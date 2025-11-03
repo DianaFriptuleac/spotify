@@ -47,6 +47,80 @@ body {
 }
 
 /*SIDEBAR SECTION*/
+
+/* Hamburger su mobile */
+.mobile-menu-toggle {
+  width: 50px;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2001;
+  display: none;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.mobile-menu-toggle:hover {
+  border: 1px solid rgb(60, 211, 60);
+  color: rgb(60, 211, 60);
+}
+.mobile-menu-toggle:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+@media screen and (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+}
+
+/* Stessa sidebar che diventa drawer su mobile */
+@media screen and (max-width: 768px) {
+  #sidebar {
+    display: block;
+    width: 78%;
+    max-width: 320px;
+    transform: translateX(-100%); /* nascosta a sinistra */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* niente ombra da chiusa */
+  }
+  #sidebar.open {
+    transform: translateX(0); /* visibile quando .open */
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.45);
+  }
+
+  /* alza un po i contenuti per non coprire l'hamburger */
+  main,
+  .auth-container,
+  .music-player,
+  .like-player {
+    padding-top: 48px;
+  }
+}
+/* Sfocatura del contenuto dietro la sidebar quando è aperta */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.35); /* ombra semitrasparente */
+  backdrop-filter: blur(6px); /* effetto sfocato */
+  -webkit-backdrop-filter: blur(6px); /* supporto Safari */
+  z-index: 1100; /* subito sotto la sidebar */
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+
+/* Quando la sidebar è chiusa transizione fluida */
+.sidebar-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .left-nav {
   position: fixed;
   top: 0;
@@ -58,7 +132,18 @@ body {
   align-items: flex-start;
   background-color: black;
   z-index: 1200;
-  height: 92%;
+  height: 88%;
+}
+#sidebar .sidebar-inner {
+  padding: 16px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar .navbar-brand {
+  padding: 0;
+  margin: 8px 0 20px 0;
 }
 
 .fixed-left .navbar-nav a {
@@ -129,11 +214,7 @@ body {
     width: 190px;
   }
 }
-@media screen and (max-width: 768px) {
-  #sidebar {
-    display: none;
-  }
-}
+
 @media (min-width: 768px) {
   .d-md-flex {
     display: flex !important;
