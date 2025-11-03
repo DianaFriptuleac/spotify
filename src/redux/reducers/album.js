@@ -16,7 +16,7 @@ const initialState = {
   isPlaying: false,
 };
 
-const rootReducer = (state = initialState, action) => {
+const albumReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ALBUMS:
       return {
@@ -59,4 +59,4 @@ const rootReducer = (state = initialState, action) => {
   }
 };
 
-export default rootReducer;
+export default albumReducer;

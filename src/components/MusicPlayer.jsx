@@ -16,13 +16,13 @@ import { likeSong } from "../redux/action";
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
-  const currentSong = useSelector((state) => state.currentSong);
-  const isPlaying = useSelector((state) => state.isPlaying);
-  const songs = useSelector((state) => state.songs);
+  const currentSong = useSelector((state) => state.music.currentSong);
+  const isPlaying = useSelector((state) => state.music.isPlaying);
+  const songs = useSelector((state) => state.music.songs ?? []);
   console.log("songs", songs);
   const audioRef = useRef(null);
   const [volume, setVolume] = useState(70); // 0 - 100
-  const likedSongs = useSelector((state) => state.likedSongs);
+  const likedSongs = useSelector((state) => state.music.likedSongs ?? []);
 const isLiked =
   !!currentSong &&                      // 1) esiste una currentSong? (true/false)
   likedSongs.some(s => s.id === currentSong.id); // 2) c'è una song con lo stesso id nei liked?

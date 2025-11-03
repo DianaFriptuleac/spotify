@@ -47,6 +47,80 @@ body {
 }
 
 /*SIDEBAR SECTION*/
+
+/* Hamburger su mobile */
+.mobile-menu-toggle {
+  width: 50px;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2001;
+  display: none;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.mobile-menu-toggle:hover {
+  border: 1px solid rgb(60, 211, 60);
+  color: rgb(60, 211, 60);
+}
+.mobile-menu-toggle:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+@media screen and (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+}
+
+/* Stessa sidebar che diventa drawer su mobile */
+@media screen and (max-width: 768px) {
+  #sidebar {
+    display: block;
+    width: 78%;
+    max-width: 320px;
+    transform: translateX(-100%); /* nascosta a sinistra */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* niente ombra da chiusa */
+  }
+  #sidebar.open {
+    transform: translateX(0); /* visibile quando .open */
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.45);
+  }
+
+  /* alza un po i contenuti per non coprire l'hamburger */
+  main,
+  .auth-container,
+  .music-player,
+  .like-player {
+    padding-top: 48px;
+  }
+}
+/* Sfocatura del contenuto dietro la sidebar quando è aperta */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.35); /* ombra semitrasparente */
+  backdrop-filter: blur(6px); /* effetto sfocato */
+  -webkit-backdrop-filter: blur(6px); /* supporto Safari */
+  z-index: 1100; /* subito sotto la sidebar */
+  transition: opacity 0.25s ease;
+  opacity: 1;
+}
+
+/* Quando la sidebar è chiusa transizione fluida */
+.sidebar-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .left-nav {
   position: fixed;
   top: 0;
@@ -58,7 +132,18 @@ body {
   align-items: flex-start;
   background-color: black;
   z-index: 1200;
-  height: 92%;
+  height: 88%;
+}
+#sidebar .sidebar-inner {
+  padding: 16px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar .navbar-brand {
+  padding: 0;
+  margin: 8px 0 20px 0;
 }
 
 .fixed-left .navbar-nav a {
@@ -80,7 +165,7 @@ body {
   width: 90%;
 }
 .search-input .form-control:focus {
-  border:1px solid rgb(60, 211, 60);
+  border: 1px solid rgb(60, 211, 60);
   box-shadow: none;
 }
 
@@ -107,7 +192,9 @@ body {
   margin-bottom: 20px;
 }
 
-.signup-btn:hover {
+.signup-btn:hover,
+.login-btn:hover,
+.go-btn:hover {
   color: white;
   background-color: rgb(60, 211, 60);
   border: 1px solid rgb(60, 211, 60);
@@ -122,21 +209,12 @@ body {
   margin-bottom: 20px;
 }
 
-.login-btn:hover {
-  color: black;
-  background-color: white;
-}
-
 @media screen and (max-width: 936px) {
   #sidebar {
     width: 190px;
   }
 }
-@media screen and (max-width: 768px) {
-  #sidebar {
-    display: none;
-  }
-}
+
 @media (min-width: 768px) {
   .d-md-flex {
     display: flex !important;
@@ -273,4 +351,113 @@ body {
     width: 56px;
     height: 56px;
   }
+}
+
+/* AUTH (Login + Register) */
+.auth-container {
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.auth-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 28px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.45); /* sfondo semitrasparente */
+  backdrop-filter: blur(8px); /* sfoca quello che c'è dietro */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.auth-title {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 35px;
+}
+@media screen and (max-width: 768px) {
+  .auth-title {
+    font-size: 28px;
+  }
+}
+
+.auth-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgb(60, 211, 60);
+  box-shadow: 0 0 0 2px rgba(60, 211, 60, 0.25);
+  color: #fff;
+}
+
+.auth-eye {
+  color: rgba(255, 255, 255, 0.7);
+}
+.auth-eye:hover,
+.auth-eye:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+.auth-submit {
+  display: inline-block;
+  width: 100%;
+  margin-top: 12px;
+  background-color: rgb(60, 211, 60) !important;
+  border-color: rgb(60, 211, 60) !important;
+  color: #000;
+  font-weight: 700;
+  border-radius: 40px;
+  padding: 10px 16px;
+  transition: transform 0.08s ease, box-shadow 0.15s ease,
+    background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.auth-submit:hover,
+.auth-submit:focus {
+  background-color: #1ed760;
+  color: #000;
+  box-shadow: 0 8px 16px rgba(30, 215, 96, 0.25);
+}
+
+.auth-submit:disabled {
+  opacity: 0.7; /* uguale a opacity: 0.7*/
+  cursor: not-allowed; /*mostrano un cursore 🚫*/
+}
+
+.auth-alert {
+  max-width: 520px;
+  margin: 0 auto 16px auto;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.08);
+  border-color: rgba(255, 0, 0, 0.25);
+  color: #fff;
+}
+
+/* Link testuali sotto i form */
+.auth-card a {
+  color: rgb(145, 145, 145);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.auth-card a:hover {
+  color: #fff;
+}
+
+/* Titoli + label dei form */
+.auth-card .form-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
 }

@@ -7,7 +7,7 @@ import { FaCirclePlay, FaHeartCircleXmark} from "react-icons/fa6";
 
 const LikedSongs = () => {
   const navigate = useNavigate();
-  const likedSongs = useSelector((state) => state.likedSongs); // lista delle canzoni preferite
+  const likedSongs = useSelector((state) => state.music.likedSongs ?? []); // lista delle canzoni preferite
   const dispatch = useDispatch(); 
 
   const handlePlay = (song) => {
