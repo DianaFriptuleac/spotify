@@ -41,19 +41,20 @@ const Register = () => {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: 520 }}>
+    <Container className="mt-5 auth-container" style={{ maxWidth: 520 }}>
       {errMsg && (
-        <Alert variant="danger" className="mt-3">
+        <Alert variant="danger" className="mt-3 auth-alert">
           {errMsg}
         </Alert>
       )}
-      <h3 className="mb-3">Registrazione</h3>
+      <h3 className="mb-3 auth-title">Register</h3>
 
-      <Form onSubmit={onSubmit} noValidate>
+      <Form onSubmit={onSubmit} noValidate className="auth-card">
         <Row>
           <Col md={6} className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control
+            className="auth-input"
               name="name"
               value={form.name}
               onChange={onChange}
@@ -64,6 +65,7 @@ const Register = () => {
           <Col md={6} className="mb-3">
             <Form.Label>Surname</Form.Label>
             <Form.Control
+            className="auth-input"
               name="surname"
               value={form.surname}
               onChange={onChange}
@@ -76,6 +78,7 @@ const Register = () => {
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
+          className="auth-input"
             type="email"
             name="email"
             value={form.email}
@@ -88,6 +91,7 @@ const Register = () => {
         <Form.Group className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
+          className="auth-input"
             type="password"
             name="password"
             value={form.password}
@@ -100,18 +104,18 @@ const Register = () => {
 
         <Button
           type="submit"
-          variant="success"
+          className="auth-submit"
           disabled={
             !form.name || !form.surname || !form.email || !form.password
           }
         >
           {" "}
-          Create account
+        Create an account
         </Button>
       </Form>
 
-      <div className="mt-3">
-        You already have an account? <Link to="/login">SSign in</Link>
+      <div className="mt-3 text-secondary px-2">
+        You already have an account? <Link to="/login">Sign in</Link>
       </div>
     </Container>
   );

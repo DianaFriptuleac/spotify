@@ -3,7 +3,6 @@ import { Button, Col, Navbar, Nav, InputGroup, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  selectCurrentUser,
   selectIsAuthenticated,
 } from "../redux/selectors/authSelectors";
 import { logoutUser } from "../redux/action/auth";
@@ -15,7 +14,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
   const dispatch = useDispatch();
 
   const isAuth = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectCurrentUser);
+
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -107,6 +106,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
                   onKeyUp={handleKeyPress}
                 />
                 <Button
+                className="go-btn"
                   variant="outline-secondary"
                   onClick={() => {
                     handleSearch(query);

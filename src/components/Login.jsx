@@ -16,7 +16,7 @@ const Login = () => {
 
   //modifiche campo input
   const onChange = (e) => {
-     // Aggiorna lo stato "form" - copia il contenuto precedente (...f)
+    // Aggiorna lo stato "form" - copia il contenuto precedente (...f)
     // sostituisce solo il campo modificato (e.target.name)
     // con il nuovo valore inserito (e.target.value)
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -27,26 +27,30 @@ const Login = () => {
     setErrMsg("");
     setLoading(true);
     try {
-      await dispatch(loginUser(form));  // chiama loginUser - action Redux
+      await dispatch(loginUser(form)); // chiama loginUser - action Redux
     } catch (error) {
       setErrMsg(error.message || "Incorrect credentials");
     } finally {
       setLoading(false);
     }
   };
-  if (isAuth) return <Navigate to="/" replace/>  //Se autenticato - reindirizza alla Home
+  if (isAuth) return <Navigate to="/" replace />; //Se autenticato - reindirizza alla Home
 
   return (
-
-    <Container className="mt-5">
-        {errMsg && <Alert variant="danger" className="mt-3">{errMsg}</Alert>}
-      <h3>Accedi</h3>
-      <Form onSubmit={onSubmit} noValidate>
+    <Container className="mt-5 auth-container">
+      {errMsg && (
+        <Alert variant="danger" className="mt-3 auth-alert">
+          {errMsg}
+        </Alert>
+      )}
+      <h3 className="auth-title">Sign in</h3>
+      <Form onSubmit={onSubmit} noValidate className="auth-card">
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label className="text-secondary">Email</Form.Label>
           <Form.Control
             type="email"
             name="email"
+            className="auth-input"
             value={form.email}
             onChange={onChange}
             placeholder="Enter your email"
@@ -55,9 +59,10 @@ const Login = () => {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Password</Form.Label>
+          <Form.Label className="text-secondary">Password</Form.Label>
           <div className="position-relative">
             <Form.Control
+              className="auth-input"
               type={showPassword ? "text" : "password"}
               name="password"
               value={form.password}
@@ -68,11 +73,9 @@ const Login = () => {
             <Button
               type="button"
               variant="link"
-              className="position-absolute top-50 end-0 translate-middle-y me-1 p-2"
+              className="auth-eye position-absolute top-50 end-0 translate-middle-y me-1 p-2"
               onClick={() => setShowPassword((v) => !v)}
-              aria-label={
-                showPassword ? "Hide password" : "Show password"
-              }
+              aria-label={showPassword ? "Hide password" : "Show password"}
             >
               <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"} />
             </Button>
@@ -81,6 +84,7 @@ const Login = () => {
         <Button
           type="submit"
           variant="primary"
+          className="auth-submit mt-4"
           disabled={!form.email || !form.password || loading}
         >
           {loading ? "Access..." : "Log in"}
