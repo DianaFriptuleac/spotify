@@ -1,59 +1,73 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectAuthError,
-  selectIsAuthenticated,
-} from "../redux/selectors/authSelectors";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { registerUser } from "../redux/action/auth";
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const error = useSelector(selectAuthError);
-  const isAuthed = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+  const [errMsg, setErrMsg] = useState("");
 
+  //Form state
   const [form, setForm] = useState({
     name: "",
     surname: "",
     email: "",
     password: "",
   });
-
+  //modifiche campo input
   const onChange = (e) => {
+    // Aggiorna lo stato "form" - copia il contenuto precedente (...f)
+    // sostituisce solo il campo modificato (e.target.name)
+    // con il nuovo valore inserito (e.target.value)
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerUser(form));
-  }
+    setErrMsg(""); // svuota campi
+    try {
+      await dispatch(registerUser(form)); // chiama registerUser di Redux
+      // { replace: true } indica a React Router di sostituire
+      // la voce corrente nella cronologia del browser (non potrà
+      // tornare indietro con il tasto “←” alla pagina di registrazione)
+      // Evita che l’utente torni su /register dopo essersi registrato.
+      navigate("/login", { replace: true }); //reindirizza alla pagina di login
+    } catch (err) {
+      setErrMsg(err.message || "Registration failed");
+    }
+  };
 
-  if(isAuthed) return <Navigate to="/" replace/>
-
-  return(
-      <Container className="mt-5" style={{ maxWidth: 520 }}>
+  return (
+    <Container className="mt-5" style={{ maxWidth: 520 }}>
+      {errMsg && (
+        <Alert variant="danger" className="mt-3">
+          {errMsg}
+        </Alert>
+      )}
       <h3 className="mb-3">Registrazione</h3>
 
       <Form onSubmit={onSubmit} noValidate>
         <Row>
           <Col md={6} className="mb-3">
-            <Form.Label>Nome</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               name="name"
               value={form.name}
               onChange={onChange}
-              placeholder="Mario"
+              placeholder="Name"
               required
             />
           </Col>
           <Col md={6} className="mb-3">
-            <Form.Label>Cognome</Form.Label>
+            <Form.Label>Surname</Form.Label>
             <Form.Control
               name="surname"
               value={form.surname}
               onChange={onChange}
-              placeholder="Rossi"
+              placeholder="Surname"
               required
             />
           </Col>
@@ -66,7 +80,7 @@ const Register = () => {
             name="email"
             value={form.email}
             onChange={onChange}
-            placeholder="nome@esempio.com"
+            placeholder="Enter your email"
             required
           />
         </Form.Group>
@@ -78,27 +92,28 @@ const Register = () => {
             name="password"
             value={form.password}
             onChange={onChange}
-            placeholder="••••••••"
+            placeholder="Enter your password"
             minLength={8}
             required
           />
-          <Form.Text className="text-muted">
-            Minimo 8 caratteri, usa maiuscole, minuscole, numeri e simboli.
-          </Form.Text>
         </Form.Group>
 
-       <Button
- type="submit"
-  variant="success"
- disabled={!form.name || !form.surname || !form.email || !form.password}
->  Crea account
-</Button>
+        <Button
+          type="submit"
+          variant="success"
+          disabled={
+            !form.name || !form.surname || !form.email || !form.password
+          }
+        >
+          {" "}
+          Create account
+        </Button>
       </Form>
 
       <div className="mt-3">
-        Hai già un account? <Link to="/login">Accedi</Link>
+        You already have an account? <Link to="/login">SSign in</Link>
       </div>
     </Container>
-  )
+  );
 };
-export default Register
+export default Register;

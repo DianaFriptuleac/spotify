@@ -9,6 +9,7 @@ const API_BASE = "http://localhost:3001/auth";
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
 //Register
+// redux/action/auth.js
 export const registerUser = ({ name, surname, email, password, avatar }) => {
   return async (dispatch) => {
     const resp = await fetch(`${API_BASE}/register`, {
@@ -17,44 +18,30 @@ export const registerUser = ({ name, surname, email, password, avatar }) => {
       body: JSON.stringify({ name, surname, email, password, avatar }),
     });
 
-    if (!resp.ok) throw new Error(`Registrazione fallita (${resp.status})`);
-
-    let data = null;
-    try { data = await resp.json(); } catch { data = null; }
-
-    // Se il BE restituisce accessToken -> auto-login
-    if (data?.accessToken) {
-      dispatch({
-        type: REGISTER_USER,
-        payload: {
-          token: data.accessToken,
-          user: {
-            id: data.id,
-            nome: data.name ?? data.nome,
-            cognome: data.surname ?? data.cognome,
-            email: data.email,
-            avatar: data.avatar,
-          },
-        },
-      });
-      return { ok: true, autoLogged: true };
+    // prova a leggere l'errore testuale/json per messaggio utile
+    if (!resp.ok) {
+      let msg = `Registrazione fallita (${resp.status})`;
+      try {
+        const err = await resp.json();
+        msg = err?.msg || err?.message || msg;
+      } catch {}
+      throw new Error(msg);
     }
 
-    // Altrimenti: registrato ma non autenticato
+    const user = await resp.json();
+
+    // salva utente "registrato ma non autenticato"
     dispatch({
       type: REGISTER_USER,
-      payload: {
-        token: null,
-        user: {
-          id: null,
-          nome: name,
-          cognome: surname,
-          email,
-          avatar,
-        },
-      },
+      payload: { token: null, user: {
+        id: user.id, nome: user.name, cognome: user.surname, email: user.email, avatar: user.avatar
+      }},
     });
-    return { ok: true, autoLogged: false };
+
+    // AUTO-LOGIN: riutilizza le stesse credenziali
+    await dispatch(loginUser({ email, password }));
+
+    return { ok: true, autoLogged: true };
   };
 };
 
@@ -69,7 +56,15 @@ export const loginUser = ({ email, password }) => {
       body: JSON.stringify({ email, password }),
     });
 
-    if (!resp.ok) throw new Error("Credenziali errate");
+    if (!resp.ok) {
+      let msg = `Errore (${resp.status})`;
+      try {
+        const err = await resp.json();
+        // il BE manda "msg"
+        msg = err?.msg || err?.message || msg;
+      } catch {}
+      throw new Error(msg);
+    }
 
     const data = await resp.json();
     dispatch({

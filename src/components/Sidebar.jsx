@@ -1,16 +1,57 @@
 import React, { useState } from "react";
 import { Button, Col, Navbar, Nav, InputGroup, Form } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  selectCurrentUser,
+  selectIsAuthenticated,
+} from "../redux/selectors/authSelectors";
+import { logoutUser } from "../redux/action/auth";
 
 const Sidebar = ({ handleSearch, handleHomeClick }) => {
   const [query, setQuery] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectCurrentUser);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSearch(query);
       setQuery("");
     }
+  };
+
+  const goRegister = () => {
+    if (isAuth) {
+      const ok = window.confirm(
+        `You're already registered and logged in. Do you want to log out?`
+      );
+      if (ok) {
+        dispatch(logoutUser());
+        navigate("/register", { replace: true });
+      }
+      return;
+    }
+    navigate("/register");
+  };
+
+  const goLogin = () => {
+    if (isAuth) {
+      const ok = window.confirm(
+        `You're already logged in. Do you want to log out?`
+      );
+      if (ok) {
+        dispatch(logoutUser());
+        navigate("/login", { replace: true });
+        //{ replace: true } -> La pag. precedente viene rimossa dalla cronologia
+        // se l’utente preme “← Indietro”, non torna alla pagina in cui era loggato.
+      }
+      return;
+    }
+    navigate("/login");
   };
 
   return (
@@ -69,7 +110,7 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
                   variant="outline-secondary"
                   onClick={() => {
                     handleSearch(query);
-                    setQuery(""); 
+                    setQuery("");
                   }}
                 >
                   GO
@@ -78,11 +119,12 @@ const Sidebar = ({ handleSearch, handleHomeClick }) => {
             </Nav>
           </Navbar.Collapse>
         </div>
+
         <div className="mt-auto nav-btn">
-          <Button variant="primary" className="mb-2 btn signup-btn">
+          <Button className="mb-2 btn signup-btn" onClick={goRegister}>
             Sign Up
           </Button>
-          <Button variant="secondary" className="btn login-btn">
+          <Button className="btn login-btn" onClick={goLogin}>
             Login
           </Button>
           <div>
